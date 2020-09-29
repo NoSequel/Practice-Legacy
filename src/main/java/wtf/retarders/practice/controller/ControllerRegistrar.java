@@ -29,7 +29,7 @@ public class ControllerRegistrar {
                         return true;
                     }
 
-                    TypeToken<?>.TypeSet superClasses = TypeToken.of(handler.getClass()).getTypes().interfaces();
+                    final TypeToken<?>.TypeSet superClasses = TypeToken.of(handler.getClass()).getTypes().interfaces();
 
                     return superClasses.stream().anyMatch(typeToken -> typeToken.getRawType().equals(handlerClass) && !typeToken.getRawType().equals(Controller.class));
                 })

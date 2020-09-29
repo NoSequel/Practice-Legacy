@@ -8,7 +8,7 @@ public abstract class AbstractTask extends BukkitRunnable {
     /**
      * Constructor for creating a new task
      *
-     * @param delay the delay between ticks
+     * @param delay    the delay between ticks
      * @param duration the duration of the
      */
     public AbstractTask(long delay, long duration) {
@@ -41,6 +41,5 @@ public abstract class AbstractTask extends BukkitRunnable {
      * Called every tick of the task.
      */
     public abstract void tick();
-
 
 }
