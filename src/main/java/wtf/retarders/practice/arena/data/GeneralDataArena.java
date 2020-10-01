@@ -22,6 +22,19 @@ public class GeneralDataArena implements SaveableData {
     private String name;
     private List<Kit> kits;
 
+    /**
+     * Constructor for loading a GeneralDataArena from a JsonObject
+     *
+     * @param object the json object
+     */
+    public GeneralDataArena(JsonObject object) {
+        // this.location1 = todo: deserialize
+        // this.location2 = todo: desrialize
+
+        this.name = object.get("name").getAsString();
+        // this.kits = todo: deserialize
+    }
+
     @Override
     public JsonObject toJson() {
         return new JsonAppender()

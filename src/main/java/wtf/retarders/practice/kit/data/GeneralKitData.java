@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import wtf.retarders.practice.data.impl.SaveableData;
+import wtf.retarders.practice.util.JsonAppender;
 
 @Getter
 @Setter
@@ -29,8 +30,22 @@ public class GeneralKitData implements SaveableData {
         this.icon = Material.DIAMOND_SWORD;
     }
 
+    /**
+     * Constructor for loading a GeneralKitData object from a JsonObject
+     *
+     * @param object the JsonObject it's loaded from
+     */
+    public GeneralKitData(JsonObject object) {
+        this.kitName = object.get("kitName").getAsString();
+        this.displayName = object.get("displayName").getAsString();
+        this.icon = Material.valueOf(object.get("icon").getAsString());
+    }
+
     @Override
     public JsonObject toJson() {
-        return null;
+        return new JsonAppender()
+                .append("kitName", this.kitName)
+                .append("displayName", this.displayName)
+                .append("icon", this.icon.name()).get();
     }
 }

@@ -3,7 +3,6 @@ package wtf.retarders.practice.match;
 import org.bukkit.entity.Player;
 import wtf.retarders.practice.arena.Arena;
 import wtf.retarders.practice.kit.Kit;
-import wtf.retarders.practice.match.result.IMatchResult;
 import wtf.retarders.practice.task.AbstractTask;
 
 import java.util.List;
@@ -18,17 +17,13 @@ public interface IMatch<T> {
 
     /**
      * Handle death of player
-     *
-     * @param matchResult the result of the match
      */
-    void handleDeath(IMatchResult matchResult);
+    void handleDeath();
 
     /**
      * Handle quit of player
-     *
-     * @param matchResult the result of the match
      */
-    void handleQuit(IMatchResult matchResult);
+    void handleQuit();
 
     /**
      * Broadcast a message in a match

@@ -1,6 +1,7 @@
 package wtf.retarders.practice.match.result.impl;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.bukkit.entity.Player;
 import wtf.retarders.practice.match.result.IMatchResult;
 import wtf.retarders.practice.match.result.MatchResultType;
@@ -11,24 +12,13 @@ import java.util.Map;
 import java.util.UUID;
 
 @Getter
+@RequiredArgsConstructor
 public class SoloMatchResult implements IMatchResult {
 
     private Player winner, loser;
 
-    private final Map<UUID, Integer> potions, totalHits;
+    private final Map<UUID, Integer> potions = new HashMap<>(), totalHits = new HashMap<>();
     private final SoloMatch match;
-
-    /**
-     * Constructor for creating a new SoloMatchResult
-     *
-     * @param match the match of the result
-     */
-    public SoloMatchResult(SoloMatch match) {
-        this.match = match;
-
-        this.potions = new HashMap<>();
-        this.totalHits = new HashMap<>();
-    }
 
     /**
      * End the match
@@ -43,11 +33,11 @@ public class SoloMatchResult implements IMatchResult {
 
         switch (type) {
             case DIED: {
-                match.handleDeath(this);
+                match.handleDeath();
             } break;
 
             case QUIT: {
-                match.handleQuit(this);
+                match.handleQuit();
             } break;
         }
     }

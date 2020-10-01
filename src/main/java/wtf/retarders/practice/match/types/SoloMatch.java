@@ -65,7 +65,7 @@ public class SoloMatch implements IMatch<Player> {
         this.callGlobalAction(kit::apply);
         final GeneralDataArena data = arena.findData(GeneralDataArena.class);
 
-        if(data != null) {
+        if (data != null) {
             player1.teleport(data.getLocation1());
             player2.teleport(data.getLocation2());
         }
@@ -74,28 +74,22 @@ public class SoloMatch implements IMatch<Player> {
     }
 
     @Override
-    public void handleDeath(IMatchResult matchResult) {
-        SoloMatchResult soloMatchResult = (SoloMatchResult) matchResult;
-
-        this.endMatch(soloMatchResult);
-        this.broadcast("&c" + soloMatchResult.getLoser().getName() + " &7has been killed by &a" + soloMatchResult.getWinner().getName());
+    public void handleDeath() {
+        this.endMatch();
+        this.broadcast("&c" + result.getLoser().getName() + " &7has been killed by &a" + result.getWinner().getName());
     }
 
     @Override
-    public void handleQuit(IMatchResult matchResult) {
-        SoloMatchResult soloMatchResult = (SoloMatchResult) matchResult;
-
-        this.endMatch(soloMatchResult);
-        this.broadcast("&c" + matchResult + " &7has disconnected.");
+    public void handleQuit() {
+        this.endMatch();
+        this.broadcast("&c" + result + " &7has disconnected.");
     }
 
 
     /**
      * Method called upon the ending of a match
-     *
-     * @param matchResult the result of the match
-     */
-    private void endMatch(SoloMatchResult matchResult) {
+     **/
+    private void endMatch() {
         this.matchController.getMatches().remove(this);
         this.runningTask.cancel();
 
@@ -103,8 +97,8 @@ public class SoloMatch implements IMatch<Player> {
 
         this.broadcast(new String[]{
                 "",
-                "&eWinner: &a" + matchResult.getWinner().getName() + " &6[" + matchResult.getPotions(matchResult.getWinner()) + "]",
-                "&cLoser: &c" + matchResult.getLoser().getName() + " &6[" + matchResult.getPotions(matchResult.getLoser()) + "]",
+                "&eWinner: &a" + result.getWinner().getName() + " &6[" + result.getPotions(result.getWinner()) + "]",
+                "&cLoser: &c" + result.getLoser().getName() + " &6[" + result.getPotions(result.getLoser()) + "]",
                 "",
         });
     }
