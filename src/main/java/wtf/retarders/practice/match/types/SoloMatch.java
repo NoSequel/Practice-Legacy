@@ -6,6 +6,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import wtf.retarders.practice.PracticePlugin;
 import wtf.retarders.practice.arena.Arena;
+import wtf.retarders.practice.arena.data.GeneralDataArena;
 import wtf.retarders.practice.event.match.MatchEndEvent;
 import wtf.retarders.practice.event.match.MatchStartEvent;
 import wtf.retarders.practice.kit.Kit;
@@ -62,9 +63,12 @@ public class SoloMatch implements IMatch<Player> {
         Bukkit.getPluginManager().callEvent(new MatchStartEvent(this));
 
         this.callGlobalAction(kit::apply);
+        final GeneralDataArena data = arena.findData(GeneralDataArena.class);
 
-        player1.teleport(arena.getLocation1());
-        player2.teleport(arena.getLocation2());
+        if(data != null) {
+            player1.teleport(data.getLocation1());
+            player2.teleport(data.getLocation2());
+        }
 
         this.runningTask = new SoloMatchTask(this);
     }

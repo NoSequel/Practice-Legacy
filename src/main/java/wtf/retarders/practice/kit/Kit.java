@@ -1,32 +1,33 @@
 package wtf.retarders.practice.kit;
 
-import lombok.Data;
-import org.bukkit.Material;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import wtf.retarders.practice.PracticePlugin;
+import wtf.retarders.practice.data.Data;
+import wtf.retarders.practice.data.Loadable;
+import wtf.retarders.practice.kit.data.GeneralKitData;
 
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
-@Data
-public class Kit {
+@Getter
+@Setter
+public class Kit implements Loadable<Data> {
 
-    private String kitName, displayName;
-
-    private ItemStack[] contents, armor;
-    private Material icon;
+    private List<Data> data = new ArrayList<>();
+    private UUID uniqueId;
 
     /**
      * Constructor for creating a new kit
      *
      * @param kitName the name of the kit
      */
-    public Kit(String kitName) {
-        this.kitName = kitName;
-        this.displayName = "&f" + kitName;
-        this.icon = Material.DIAMOND_SWORD;
+    public Kit(String kitName, UUID uuid) {
+        this.uniqueId = uuid;
 
+        this.addData(new GeneralKitData(kitName));
         PracticePlugin.getPlugin().getHandler().findHandler(KitController.class).getKits().add(this);
     }
 
@@ -36,7 +37,11 @@ public class Kit {
      * @param player the player to apply it to
      */
     public void apply(Player player) {
-        player.getInventory().setContents(contents);
-        player.getInventory().setArmorContents(armor);
+        final GeneralKitData data = this.findData(GeneralKitData.class);
+
+        if (data != null) {
+            player.getInventory().setContents(data.getContents());
+            player.getInventory().setArmorContents(data.getArmor());
+        }
     }
 }
